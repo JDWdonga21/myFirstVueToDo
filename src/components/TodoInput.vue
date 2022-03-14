@@ -1,11 +1,11 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" />
-    <span class="addContainer">
-      <!-- <i class="fa-solid fa-plus"></i> -->
+    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
+    <span class="addContainer" v-on:click="addTodo">
+      <i class="fa fa-plus addbtn"></i>
       <!-- <span class="material-icons-outlined"> add </span> -->
-      <button class="material-icons-outlined" v-on:click="addTodo">add</button>
     </span>
+    <!-- <button class="material-icons-outlined" v-on:click="addTodo">add</button> -->
   </div>
 </template>
 
@@ -19,9 +19,14 @@ export default {
   methods: {
     addTodo: function () {
       //console.log(this.newTodoItem);
-      //저장 로직
-      localStorage.setItem(this.newTodoItem, this.newTodoItem);
-      this.clearInput();
+      if (this.newTodoItem !== "") {
+        var obj = { completed: false, item: this.newTodoItem };
+        //저장 로직
+        //stringify 자바스크립트 객체를 str으로 들어감
+        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+        //this로 메서드도 접근 가능
+        this.clearInput();
+      }
     },
     clearInput: function () {
       this.newTodoItem = "";
