@@ -1,5 +1,3 @@
-123 345
-
 <template>
   <div id="app">
     <Todo-Header></Todo-Header>
