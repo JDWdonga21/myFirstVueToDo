@@ -20,10 +20,12 @@ export default {
     addTodo: function () {
       //console.log(this.newTodoItem);
       if (this.newTodoItem !== "") {
-        var obj = { completed: false, item: this.newTodoItem };
-        //저장 로직
-        //stringify 자바스크립트 객체를 str으로 들어감
-        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+        // var obj = { completed: false, item: this.newTodoItem };
+        // //저장 로직
+        // //stringify 자바스크립트 객체를 str으로 들어감
+        // localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+        // addTodoItem event 발생
+        this.$emit("addTodoItem", this.newTodoItem);
         //this로 메서드도 접근 가능
         this.clearInput();
       }

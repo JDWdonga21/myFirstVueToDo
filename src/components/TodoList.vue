@@ -3,7 +3,7 @@
     <ul>
       <!-- v-for를 사용할 때 내장된 index 가 있다. -->
       <li
-        v-for="(todoItem, index) in todoItems"
+        v-for="(todoItem, index) in propsdata"
         v-bind:key="todoItem.item"
         class="shadow"
       >
@@ -27,41 +27,31 @@
 
 <script>
 export default {
-  data: function () {
-    return {
-      todoItems: [],
-    };
-  },
+  //App.vue에서 데이터를 props로 받는다.
+  props: ["propsdata"],
+  // data: function () {
+  //   return {
+  //     todoItems: [],
+  //   };
+  // },
   methods: {
     removeTodo: function (todoItem, index) {
       // 삭제기능
-      // console.log(todoItem, index);
-      localStorage.removeItem(todoItem);
-      // splice
-      this.todoItems.splice(index, 1);
+      this.$emit("removeItem", todoItem, index);
+
+      // localStorage.removeItem(todoItem);
+      // // splice
+      // this.todoItems.splice(index, 1);
     },
     toggleComplete: function (todoItem, index) {
       //완료기능
-      console.log(todoItem, index);
-      todoItem.completed = !todoItem.completed;
-      // update 기능이 없으므로 지웠다가 다시 만들어야함
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+      this.$emit("completeItem", todoItem, index);
+      //console.log(todoItem, index);
+      // todoItem.completed = !todoItem.completed;
+      // // update 기능이 없으므로 지웠다가 다시 만들어야함
+      // localStorage.removeItem(todoItem.item);
+      // localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-  },
-  created: function () {
-    if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
-          //this.todoItems.push(localStorage.key(i));
-          // JSON.parse str -> 오브젝트로
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-          // console.log(localStorage.key(i));
-        }
-      }
-    }
   },
 };
 </script>
