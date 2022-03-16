@@ -6,14 +6,33 @@
       <!-- <span class="material-icons-outlined"> add </span> -->
     </span>
     <!-- <button class="material-icons-outlined" v-on:click="addTodo">add</button> -->
+    <My-Modal v-if="showModal" @close="showModal = false">
+      <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+      <!-- @click="showModal = false" 은 v-on 의 축약형  -->
+      <h3 slot="header">경고!</h3>
+      <p slot="body">무언가를 입력하세요.</p>
+      <p slot="footer">
+        <i
+          class="fa fa-times-circle-o closeModalBtn"
+          style="font-size: 36px"
+          @click="showModal = false"
+        ></i>
+      </p>
+    </My-Modal>
   </div>
 </template>
 
 <script>
+import Modal from "./common/MyModal.vue";
+
 export default {
   data: function () {
     return {
       newTodoItem: "",
+      showModal: false,
     };
   },
   methods: {
@@ -28,11 +47,16 @@ export default {
         this.$emit("addTodoItem", this.newTodoItem);
         //this로 메서드도 접근 가능
         this.clearInput();
+      } else {
+        this.showModal = !this.showModal;
       }
     },
     clearInput: function () {
       this.newTodoItem = "";
     },
+  },
+  components: {
+    "My-Modal": Modal,
   },
 };
 </script>
@@ -61,5 +85,8 @@ input:focus {
 .addBtn {
   color: white;
   vertical-align: middle;
+}
+.closeModalBtn {
+  color: #f34363;
 }
 </style>

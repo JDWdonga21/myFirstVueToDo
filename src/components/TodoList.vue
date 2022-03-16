@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul>
+    <transition-group name="list" tag="ul">
       <!-- v-for를 사용할 때 내장된 index 가 있다. -->
       <li
         v-for="(todoItem, index) in propsdata"
@@ -21,7 +21,7 @@
           <!-- <span class="material-icons-outlined"> add </span> -->
         </span>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -88,5 +88,15 @@ li {
 .removeBtn {
   margin-left: auto;
   color: #de4343;
+}
+/* 리스트 아이탬 트랜지션*/
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>
