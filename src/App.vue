@@ -1,15 +1,17 @@
 <template>
   <div id="app">
-    <Todo-Header></Todo-Header>
+    <TodoHeader></TodoHeader>
     <!-- event 사용 -->
-    <Todo-Input v-on:addTodoItem="addOneItem"></Todo-Input>
+    <!-- <TodoInput v-on:addTodoItem="addOneItem"></TodoInput> -->
+    <TodoInput></TodoInput>
     <!-- todoitems todolist로 데이터 props로 내려야함 -->
-    <Todo-List
+    <!-- <TodoList
       v-bind:propsdata="todoItems"
       v-on:removeItem="removeOneItem"
       v-on:completeItem="completeOneItem"
-    ></Todo-List>
-    <Todo-Footer v-on:clearAll="clearAllItems"></Todo-Footer>
+    ></TodoList> -->
+    <TodoList></TodoList>
+    <TodoFooter></TodoFooter>
   </div>
 </template>
 
@@ -26,51 +28,56 @@ export default {
     };
   },
   methods: {
-    addOneItem: function (todoItem) {
-      var obj = { completed: false, item: todoItem };
-      //저장 로직
-      //stringify 자바스크립트 객체를 str으로 들어감
-      localStorage.setItem(todoItem, JSON.stringify(obj));
-      this.todoItems.push(obj);
-    },
-    removeOneItem: function (todoItem, index) {
-      localStorage.removeItem(todoItem.item);
-      // splice
-      this.todoItems.splice(index, 1);
-    },
-    completeOneItem: function (todoItem, index) {
-      // todoItem.completed = !todoItem.completed;
-      // 이유는? 컴포넌트 간의 경계를 명확하게 함/ 안티패턴? 을 막음
-      this.todoItems[index].completed = !this.todoItems[index].completed;
-      // update 기능이 없으므로 지웠다가 다시 만들어야함
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-    },
-    clearAllItems: function () {
-      localStorage.clear();
-      this.todoItems = [];
-    },
+    //mutations를 사용해서 store.js에서 구현
+    // addOneItem(todoItem) {
+    //   const obj = { completed: false, item: todoItem };
+    //   //저장 로직
+    //   //stringify 자바스크립트 객체를 str으로 들어감
+    //   localStorage.setItem(todoItem, JSON.stringify(obj));
+    //   this.todoItems.push(obj);
+    // },
+    // removeOneItem(todoItem, index) {
+    //   localStorage.removeItem(todoItem.item);
+    //   // splice
+    //   this.todoItems.splice(index, 1);
+    // },
+    // completeOneItem(todoItem, index) {
+    //   // todoItem.completed = !todoItem.completed;
+    //   // 이유는? 컴포넌트 간의 경계를 명확하게 함/ 안티패턴? 을 막음
+    //   this.todoItems[index].completed = !this.todoItems[index].completed;
+    //   // update 기능이 없으므로 지웠다가 다시 만들어야함
+    //   localStorage.removeItem(todoItem.item);
+    //   localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    // },
+    // clearAllItems() {
+    //   localStorage.clear();
+    //   this.todoItems = [];
+    // },
   },
-  created: function () {
-    if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
-          //this.todoItems.push(localStorage.key(i));
-          // JSON.parse str -> 오브젝트로
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-          // console.log(localStorage.key(i));
-        }
-      }
-    }
-  },
+  // created() {
+  //   if (localStorage.length > 0) {
+  //     for (let i = 0; i < localStorage.length; i++) {
+  //       if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
+  //         //this.todoItems.push(localStorage.key(i));
+  //         // JSON.parse str -> 오브젝트로
+  //         this.todoItems.push(
+  //           JSON.parse(localStorage.getItem(localStorage.key(i)))
+  //         );
+  //         // console.log(localStorage.key(i));
+  //       }
+  //     }
+  //   }
+  // },
   components: {
     //컴포넌트 태그명 : 컴포넌트 내용
-    "Todo-Header": TodoHeader,
-    "Todo-Input": TodoInput,
-    "Todo-List": TodoList,
-    "Todo-Footer": TodoFooter,
+    // TodoHeader: TodoHeader,
+    // TodoInput: TodoInput,
+    // TodoList: TodoList,
+    // TodoFooter: TodoFooter,
+    TodoHeader,
+    TodoInput,
+    TodoList,
+    TodoFooter,
   },
 };
 </script>

@@ -7,8 +7,10 @@
 <script>
 export default {
   methods: {
-    clearTodo: function () {
-      this.$emit("clearAll");
+    clearTodo() {
+      //this.$emit("clearAll");
+      //220317 store를 이용한 전체삭제기능 구현
+      this.$store.commit("clearAllItems");
     },
   },
 };

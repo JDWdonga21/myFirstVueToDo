@@ -2,8 +2,9 @@
   <div>
     <transition-group name="list" tag="ul">
       <!-- v-for를 사용할 때 내장된 index 가 있다. -->
+      <!-- 22/03/17 propsdata -> this.$store.state.todoItems state에 있는 todoItem을 가져옴 -->
       <li
-        v-for="(todoItem, index) in propsdata"
+        v-for="(todoItem, index) in this.$store.state.todoItems"
         v-bind:key="todoItem.item"
         class="shadow"
       >
@@ -12,9 +13,9 @@
           v-bind:class="{ checkBtnCompleted: todoItem.completed }"
           v-on:click="toggleComplete(todoItem, index)"
         ></i>
-        <span v-bind:class="{ textCompleted: todoItem.completed }">{{
-          todoItem.item
-        }}</span>
+        <span v-bind:class="{ textCompleted: todoItem.completed }"
+          >{{ todoItem.item }}{{ index }}</span
+        >
 
         <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
           <i class="fa fa-trash-o"></i>
@@ -28,29 +29,35 @@
 <script>
 export default {
   //App.vue에서 데이터를 props로 받는다.
-  props: ["propsdata"],
+  //props: ["propsdata"],
   // data: function () {
   //   return {
   //     todoItems: [],
   //   };
   // },
   methods: {
-    removeTodo: function (todoItem, index) {
+    removeTodo(todoItem, index) {
       // 삭제기능
-      this.$emit("removeItem", todoItem, index);
+      //this.$emit("removeItem", todoItem, index);
 
       // localStorage.removeItem(todoItem);
       // // splice
       // this.todoItems.splice(index, 1);
+
+      //220317 store롤 이용한 삭제기능 구현
+      this.$store.commit("removeOneItem", todoItem, index);
     },
-    toggleComplete: function (todoItem, index) {
+    toggleComplete(todoItem, index) {
       //완료기능
-      this.$emit("completeItem", todoItem, index);
+      //this.$emit("completeItem", todoItem, index);
       //console.log(todoItem, index);
       // todoItem.completed = !todoItem.completed;
       // // update 기능이 없으므로 지웠다가 다시 만들어야함
       // localStorage.removeItem(todoItem.item);
       // localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+
+      //220317 store를 이용한 완료기능 구현
+      this.$store.commit("completeOneItem", todoItem, index);
     },
   },
 };

@@ -6,7 +6,7 @@
       <!-- <span class="material-icons-outlined"> add </span> -->
     </span>
     <!-- <button class="material-icons-outlined" v-on:click="addTodo">add</button> -->
-    <My-Modal v-if="showModal" @close="showModal = false">
+    <Modal v-if="showModal" @close="showModal = false">
       <!--
       you can use custom content here to overwrite
       default content
@@ -21,7 +21,7 @@
           @click="showModal = false"
         ></i>
       </p>
-    </My-Modal>
+    </Modal>
   </div>
 </template>
 
@@ -29,14 +29,14 @@
 import Modal from "./common/MyModal.vue";
 
 export default {
-  data: function () {
+  data() {
     return {
       newTodoItem: "",
       showModal: false,
     };
   },
   methods: {
-    addTodo: function () {
+    addTodo() {
       //console.log(this.newTodoItem);
       if (this.newTodoItem !== "") {
         // var obj = { completed: false, item: this.newTodoItem };
@@ -44,19 +44,26 @@ export default {
         // //stringify 자바스크립트 객체를 str으로 들어감
         // localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
         // addTodoItem event 발생
-        this.$emit("addTodoItem", this.newTodoItem);
+        //this.$emit("addTodoItem", this.newTodoItem);
+
+        //trim 앞뒤의 공백을 지워줌
+        const text = this.newTodoItem.trim();
+        // store mutations의 commit()
+        this.$store.commit("addOneItem", text);
+
         //this로 메서드도 접근 가능
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
       }
     },
-    clearInput: function () {
+    clearInput() {
       this.newTodoItem = "";
     },
   },
   components: {
-    "My-Modal": Modal,
+    // "Modal": Modal,
+    Modal,
   },
 };
 </script>

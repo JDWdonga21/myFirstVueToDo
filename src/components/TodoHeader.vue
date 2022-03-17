@@ -1,6 +1,7 @@
 <template>
   <header>
-    <h1>ToDo~!</h1>
+    <!-- store 폴더 안 store.js 의 state: { headerText } -->
+    <h1>{{ this.$store.state.headerText }}</h1>
   </header>
 </template>
 
