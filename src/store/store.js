@@ -44,7 +44,7 @@ export const store = new Vuex.Store({
     indexnum: 0,
     todoItems: storage.fetch(),
   },
-  //
+  //state의 값을 getters로 접근
   getters: {
     storedTodoItems(state) {
       return state.todoItems;

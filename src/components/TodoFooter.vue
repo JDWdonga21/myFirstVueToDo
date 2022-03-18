@@ -5,13 +5,18 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   methods: {
-    clearTodo() {
-      //this.$emit("clearAll");
-      //220317 store를 이용한 전체삭제기능 구현
-      this.$store.commit("clearAllItems");
-    },
+    ...mapMutations({
+      clearTodo: "clearAllItems",
+    }),
+    // 22/03/18 ...mapMutations을 사용함에 따라 주석처리
+    // clearTodo() {
+    //   //this.$emit("clearAll");
+    //   //220317 store를 이용한 전체삭제기능 구현
+    //   this.$store.commit("clearAllItems");
+    // },
   },
 };
 </script>
