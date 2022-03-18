@@ -13,9 +13,9 @@
           v-bind:class="{ checkBtnCompleted: todoItem.completed }"
           v-on:click="toggleComplete(todoItem, index)"
         ></i>
-        <span v-bind:class="{ textCompleted: todoItem.completed }"
-          >{{ todoItem.item }}{{ index }}</span
-        >
+        <span v-bind:class="{ textCompleted: todoItem.completed }">{{
+          todoItem.item
+        }}</span>
 
         <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
           <i class="fa fa-trash-o"></i>
@@ -45,7 +45,9 @@ export default {
       // this.todoItems.splice(index, 1);
 
       //220317 store롤 이용한 삭제기능 구현
-      this.$store.commit("removeOneItem", todoItem, index);
+      console.log(index);
+      console.log(todoItem);
+      this.$store.commit("removeOneItem", { todoItem, index });
     },
     toggleComplete(todoItem, index) {
       //완료기능
@@ -57,7 +59,7 @@ export default {
       // localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
 
       //220317 store를 이용한 완료기능 구현
-      this.$store.commit("completeOneItem", todoItem, index);
+      this.$store.commit("completeOneItem", { todoItem, index });
     },
   },
 };

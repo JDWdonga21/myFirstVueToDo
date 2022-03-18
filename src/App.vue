@@ -24,7 +24,7 @@ import TodoFooter from "./components/TodoFooter.vue";
 export default {
   data() {
     return {
-      todoItems: [],
+      //todoItems: [],
     };
   },
   methods: {

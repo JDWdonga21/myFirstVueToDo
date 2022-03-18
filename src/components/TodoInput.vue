@@ -45,11 +45,12 @@ export default {
         // localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
         // addTodoItem event 발생
         //this.$emit("addTodoItem", this.newTodoItem);
+        let keynum = Math.floor(Math.random() * 100000);
 
         //trim 앞뒤의 공백을 지워줌
         const text = this.newTodoItem.trim();
         // store mutations의 commit()
-        this.$store.commit("addOneItem", text);
+        this.$store.commit("addOneItem", { text, keynum });
 
         //this로 메서드도 접근 가능
         this.clearInput();
