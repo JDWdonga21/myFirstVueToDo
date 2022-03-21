@@ -1,7 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import * as getters from "./getters";
+import * as mutations from "./mutations";
+
+//import todoApp from "./modules/todoApp";
 
 Vue.use(Vuex);
+
+//todoApp.js 쓸려면
+// export const store = new Vuex.Store({
+//   modules: {
+//     todoApp
+//   }
+// })
 
 const storage = {
   //fetch: function()
@@ -45,44 +56,46 @@ export const store = new Vuex.Store({
     todoItems: storage.fetch(),
   },
   //state의 값을 getters로 접근
-  getters: {
-    storedTodoItems(state) {
-      return state.todoItems;
-    },
-  },
-  mutations: {
-    reMakeindex(state, index) {
-      state.indexnum = index;
-    },
-    addOneItem(state, makeSignal) {
-      const obj = {
-        key: makeSignal.keynum,
-        completed: false,
-        item: makeSignal.text,
-      };
-      localStorage.setItem(makeSignal.keynum, JSON.stringify(obj));
-      //this.todoItems.push(obj);
-      state.todoItems.push(obj);
-    },
-    removeOneItem(state, payload) {
-      localStorage.removeItem(payload.todoItem.key);
-
-      // splice
-      state.todoItems.splice(payload.index, 1);
-    },
-    completeOneItem(state, getSignal) {
-      state.todoItems[getSignal.index].completed =
-        !state.todoItems[getSignal.index].completed;
-      // update 기능이 없으므로 지웠다가 다시 만들어야함
-      localStorage.removeItem(getSignal.todoItem.key);
-      localStorage.setItem(
-        getSignal.todoItem.key,
-        JSON.stringify(getSignal.todoItem)
-      );
-    },
-    clearAllItems(state) {
-      localStorage.clear();
-      state.todoItems = [];
-    },
-  },
+  // 22/03/21 스토어 속성 모듈화
+  getters: getters,
+  mutations: mutations,
+  // getters: {
+  //   storedTodoItems(state) {
+  //     return state.todoItems;
+  //   },
+  // },
+  // mutations: {
+  //   reMakeindex(state, index) {
+  //     state.indexnum = index;
+  //   },
+  //   addOneItem(state, makeSignal) {
+  //     const obj = {
+  //       key: makeSignal.keynum,
+  //       completed: false,
+  //       item: makeSignal.text,
+  //     };
+  //     localStorage.setItem(makeSignal.keynum, JSON.stringify(obj));
+  //     //this.todoItems.push(obj);
+  //     state.todoItems.push(obj);
+  //   },
+  //   removeOneItem(state, payload) {
+  //     localStorage.removeItem(payload.todoItem.key);
+  //     // splice
+  //     state.todoItems.splice(payload.index, 1);
+  //   },
+  //   completeOneItem(state, getSignal) {
+  //     state.todoItems[getSignal.index].completed =
+  //       !state.todoItems[getSignal.index].completed;
+  //     // update 기능이 없으므로 지웠다가 다시 만들어야함
+  //     localStorage.removeItem(getSignal.todoItem.key);
+  //     localStorage.setItem(
+  //       getSignal.todoItem.key,
+  //       JSON.stringify(getSignal.todoItem)
+  //     );
+  //   },
+  //   clearAllItems(state) {
+  //     localStorage.clear();
+  //     state.todoItems = [];
+  //   },
+  // },
 });
