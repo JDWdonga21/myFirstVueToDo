@@ -35,6 +35,12 @@ export default {
       showModal: false,
     };
   },
+  watch: {
+    newTodoItem(){
+      //입력시 로그 저장
+      console.log("입력중");
+    }
+  },
   methods: {
     addTodo() {
       //console.log(this.newTodoItem);
