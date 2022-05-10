@@ -1,28 +1,33 @@
 <template>
-  <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
-    <span class="addContainer" v-on:click="addTodo">
-      <i class="fa fa-plus addbtn"></i>
-      <!-- <span class="material-icons-outlined"> add </span> -->
-    </span>
-    <!-- <button class="material-icons-outlined" v-on:click="addTodo">add</button> -->
-    <Modal v-if="showModal" @close="showModal = false">
-      <!--
-      you can use custom content here to overwrite
-      default content
-    -->
-      <!-- @click="showModal = false" 은 v-on 의 축약형  -->
-      <h3 slot="header">경고!</h3>
-      <p slot="body">무언가를 입력하세요.</p>
-      <p slot="footer">
-        <i
-          class="fa fa-times-circle-o closeModalBtn"
-          style="font-size: 36px"
-          @click="showModal = false"
-        ></i>
-      </p>
-    </Modal>
-  </div>
+  <div>
+    <div>
+      <p>{{newWriting}}</p>
+    </div>
+    <div class="inputBox shadow">
+      <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
+      <span class="addContainer" v-on:click="addTodo">
+        <i class="fa fa-plus addbtn"></i>
+        <!-- <span class="material-icons-outlined"> add </span> -->
+      </span>
+      <!-- <button class="material-icons-outlined" v-on:click="addTodo">add</button> -->    
+      <Modal v-if="showModal" @close="showModal = false">
+        <!--
+        you can use custom content here to overwrite
+        default content
+      -->
+        <!-- @click="showModal = false" 은 v-on 의 축약형  -->
+        <h3 slot="header">경고!</h3>
+        <p slot="body">무언가를 입력하세요.</p>
+        <p slot="footer">
+          <i
+            class="fa fa-times-circle-o closeModalBtn"
+            style="font-size: 36px"
+            @click="showModal = false"
+          ></i>
+        </p>
+      </Modal>
+    </div>
+  </div>  
 </template>
 
 <script>
@@ -32,6 +37,7 @@ export default {
   data() {
     return {
       newTodoItem: "",
+      newWriting: "",
       showModal: false,
     };
   },
@@ -39,9 +45,15 @@ export default {
     newTodoItem(){
       //입력시 로그 저장
       console.log("입력중");
+      this.newWriting="입력중";
+      //타이머 setInterval, setTimeout
+      this.timer = setTimeout(this.reChange, 1500);
     }
   },
   methods: {
+    reChange() {   
+      this.newWriting="";      
+    },  
     addTodo() {
       //console.log(this.newTodoItem);
       if (this.newTodoItem !== "") {

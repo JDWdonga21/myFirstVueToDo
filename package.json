@@ -5,7 +5,7 @@
   "scripts": {
     "dw": "vue-cli-service serve -mode dw",
     "serve": "vue-cli-service --port 10000 serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service --port 10000 build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
