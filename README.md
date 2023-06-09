@@ -1,6 +1,15 @@
 <<<<<<< HEAD
 # myFirstVueToDo
 =======
+- 리스트
+- 리스트
+1. vue
+2. vue
+
+
+**두껍게**
+
+_기울임_
 # vue-cli
 
 ## Project setup
